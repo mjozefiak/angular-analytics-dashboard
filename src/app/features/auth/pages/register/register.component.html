@@ -1,0 +1,53 @@
+<mat-card>
+   <mat-card-header>
+      <mat-card-title>Register</mat-card-title>
+   </mat-card-header>
+   <mat-card-content>
+      <form class="register-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+         <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input formControlName="email" matInput type="email" />
+            @if (email?.invalid && (email?.dirty || email?.touched)) {
+               @if (email?.hasError('required')) {
+                  <mat-error>Email is required</mat-error>
+               }
+               @if (email?.hasError('email')) {
+                  <mat-error>Email is not valid</mat-error>
+               }
+            }
+         </mat-form-field>
+         <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input formControlName="password" matInput [type]="hidePassword() ? 'password' : 'text'" />
+            <button
+               matIconButton
+               matSuffix
+               type="button"
+               [attr.aria-label]="'Hide password'"
+               [attr.aria-pressed]="hidePassword()"
+               (click)="togglePasswordVisibility($event)">
+               <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            @if (password?.invalid && (password?.dirty || password?.touched)) {
+               @if (password?.hasError('required')) {
+                  <mat-error>Password is required</mat-error>
+               }
+            }
+         </mat-form-field>
+         <mat-form-field>
+            <mat-label>Confirm Password</mat-label>
+            <input formControlName="confirmPassword" matInput [type]="hideConfirmPassword() ? 'password' : 'text'" />
+            <button
+               matIconButton
+               matSuffix
+               type="button"
+               [attr.aria-label]="'Hide confirm password'"
+               [attr.aria-pressed]="hideConfirmPassword()"
+               (click)="toggleConfirmPasswordVisibility($event)">
+               <mat-icon>{{ hideConfirmPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+         </mat-form-field>
+         <button color="primary" matButton="elevated" type="submit" [disabled]="registerForm.invalid">Register</button>
+      </form>
+   </mat-card-content>
+</mat-card>
