@@ -3,7 +3,7 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators }
 
 @Injectable()
 export class RegisterFormService {
-   private readonly form = new FormGroup({
+   readonly form = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
       confirmPassword: new FormControl('', [Validators.required, this.confirmPasswordValidator]),

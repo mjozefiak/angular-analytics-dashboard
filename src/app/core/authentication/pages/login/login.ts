@@ -9,14 +9,14 @@ import { LoginFormService } from './login-form.service';
 
 @Component({
    selector: 'app-login',
-   templateUrl: './login.component.html',
-   styleUrls: ['./login.component.scss'],
+   templateUrl: './login.html',
+   styleUrls: ['./login.scss'],
    changeDetection: ChangeDetectionStrategy.OnPush,
    providers: [LoginFormService],
    imports: [MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule, ReactiveFormsModule],
 })
-export class LoginComponent {
-   readonly loginFormService = inject(LoginFormService);
+export class Login {
+   protected readonly loginFormService = inject(LoginFormService);
 
    readonly hidePassword = signal<boolean>(true);
 

@@ -9,10 +9,10 @@ export const AUTH_ROUTES = {
 export const authRoutes: Routes = [
    {
       path: AUTH_ROUTES.login,
-      loadComponent: () => import('./pages/login/login.component').then(m => m.LoginComponent),
+      loadComponent: () => import('./pages/login/login').then(m => m.Login),
    },
    {
       path: AUTH_ROUTES.register,
-      loadComponent: () => import('./pages/register/register.component').then(m => m.RegisterComponent),
+      loadComponent: () => import('./pages/register/register').then(m => m.Register),
    },
 ];

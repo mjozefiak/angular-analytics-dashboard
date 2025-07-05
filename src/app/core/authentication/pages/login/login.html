@@ -1,9 +1,9 @@
 <mat-card>
    <mat-card-header>
-      <mat-card-title>Register</mat-card-title>
+      <mat-card-title>Login</mat-card-title>
    </mat-card-header>
    <mat-card-content>
-      <form class="register-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <form class="login-form" [formGroup]="loginFormService.form" (ngSubmit)="loginFormService.onSubmit()">
          <mat-form-field>
             <mat-label>Email</mat-label>
             <input formControlName="email" matInput type="email" />
@@ -34,20 +34,7 @@
                }
             }
          </mat-form-field>
-         <mat-form-field>
-            <mat-label>Confirm Password</mat-label>
-            <input formControlName="confirmPassword" matInput [type]="hideConfirmPassword() ? 'password' : 'text'" />
-            <button
-               matIconButton
-               matSuffix
-               type="button"
-               [attr.aria-label]="'Hide confirm password'"
-               [attr.aria-pressed]="hideConfirmPassword()"
-               (click)="toggleConfirmPasswordVisibility($event)">
-               <mat-icon>{{ hideConfirmPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
-            </button>
-         </mat-form-field>
-         <button color="primary" matButton="elevated" type="submit" [disabled]="registerForm.invalid">Register</button>
+         <button color="primary" matButton="elevated" type="submit" [disabled]="loginFormService.form.invalid">Login</button>
       </form>
    </mat-card-content>
 </mat-card>

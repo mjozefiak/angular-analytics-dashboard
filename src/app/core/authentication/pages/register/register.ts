@@ -1,38 +1,36 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { inject } from '@angular/core';
+import { RegisterFormService } from './register-form.service';
 
 @Component({
    selector: 'app-register',
-   templateUrl: './register.component.html',
-   styleUrls: ['./register.component.scss'],
+   templateUrl: './register.html',
+   styleUrls: ['./register.scss'],
    changeDetection: ChangeDetectionStrategy.OnPush,
    imports: [MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule, ReactiveFormsModule],
 })
-export class RegisterComponent {
-   registerForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required]),
-      confirmPassword: new FormControl('', [Validators.required, this.confirmPasswordValidator]),
-   });
+export class Register {
+   protected readonly registerFormService = inject(RegisterFormService);
 
    readonly hidePassword = signal<boolean>(true);
    readonly hideConfirmPassword = signal<boolean>(true);
 
-   get email(): AbstractControl<string | null, string | null> | null {
-      return this.registerForm.get('email');
+   get email(): AbstractControl<string | null> | null {
+      return this.registerFormService.form.get('email');
    }
 
-   get password(): AbstractControl<string | null, string | null> | null {
-      return this.registerForm.get('password');
+   get password(): AbstractControl<string | null> | null {
+      return this.registerFormService.form.get('password');
    }
 
-   get confirmPassword(): AbstractControl<string | null, string | null> | null {
-      return this.registerForm.get('confirmPassword');
+   get confirmPassword(): AbstractControl<string | null> | null {
+      return this.registerFormService.form.get('confirmPassword');
    }
 
    confirmPasswordValidator(control: AbstractControl): ValidationErrors | null {
@@ -42,6 +40,8 @@ export class RegisterComponent {
       if (password?.value !== confirmPassword?.value) {
          return { confirmPassword: true };
       }
+
+      return null;
    }
 
    togglePasswordVisibility(event: MouseEvent): void {
@@ -55,11 +55,11 @@ export class RegisterComponent {
    }
 
    onSubmit(): void {
-      if (this.registerForm.invalid) {
-         this.registerForm.markAllAsTouched();
+      if (this.registerFormService.form.invalid) {
+         this.registerFormService.form.markAllAsTouched();
          return;
       }
 
-      console.log(this.registerForm.value);
+      console.log(this.registerFormService.form.value);
    }
 }
